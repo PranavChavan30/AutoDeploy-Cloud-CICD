@@ -1,0 +1,22 @@
+name: AutoDeploy – Cloud CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: |
+        docker build -t autodeploy-ci .
+
+    - name: Run CI pipeline (test.py)
+      run: |
+        docker run --rm autodeploy-ci
